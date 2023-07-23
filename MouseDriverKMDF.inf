@@ -1,0 +1,89 @@
+;
+; MouseDriverKMDF.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Mouse ; TODO: specify appropriate Class
+ClassGuid={4D36E96F-E325-11CE-BFC1-08002BE10318} ; TODO: specify appropriate ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=MouseDriverKMDF.cat
+DriverVer = 07/23/2023,11.56.30.35
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+MouseDriverKMDF_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+MouseDriverKMDF.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%MouseDriverKMDF.DeviceDesc%=MouseDriverKMDF_Device, HID_DEVICE_SYSTEM_MOUSE ; TODO: edit hw-id
+
+[MouseDriverKMDF_Device.NT]
+Include = MSMOUSE.INF
+Needs = HID_Mouse_Inst.NT
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+MouseDriverKMDF.sys
+
+;-------------- Service installation
+[MouseDriverKMDF_Device.NT.Services]
+AddService = MouseDriverKMDF,%SPSVCINST_ASSOCSERVICE%, MouseDriverKMDF_Service_Inst
+Include = MSMOUSE.INF
+Needs = HID_Mouse_Inst.NT.Services
+
+; -------------- MouseDriverKMDF driver install sections
+[MouseDriverKMDF_Service_Inst]
+DisplayName    = %MouseDriverKMDF.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\MouseDriverKMDF.sys
+
+;
+;--- MouseDriverKMDF_Device Coinstaller installation ------
+;
+
+[MouseDriverKMDF_Device.NT.HW]
+Include = MSMOUSE.INF
+Needs = HID_Mouse_Inst.NT.Hw
+HKR,,"LowerFilters",0x00010000,"MouseDriverKMDF"
+
+;[MouseDriverKMDF_Device.NT.CoInstallers]
+;Include = MSMOUSE.INF
+;Needs = HID_Mouse_Inst.NT.Hw
+;AddReg=MouseDriverKMDF_Device_CoInstaller_AddReg
+;CopyFiles=MouseDriverKMDF_Device_CoInstaller_CopyFiles
+
+;[MouseDriverKMDF_Device_CoInstaller_AddReg]
+;HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+;[MouseDriverKMDF_Device_CoInstaller_CopyFiles]
+;WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[MouseDriverKMDF_Device.NT.Wdf]
+KmdfService =  MouseDriverKMDF, MouseDriverKMDF_wdfsect
+[MouseDriverKMDF_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "MouseDriverKMDF Installation Disk"
+MouseDriverKMDF.DeviceDesc = "MouseDriverKMDF Device"
+MouseDriverKMDF.SVCDESC = "MouseDriverKMDF Service"
