@@ -8,7 +8,7 @@ Class=Mouse ; TODO: specify appropriate Class
 ClassGuid={4D36E96F-E325-11CE-BFC1-08002BE10318} ; TODO: specify appropriate ClassGuid
 Provider=%ManufacturerName%
 CatalogFile=MouseDriverKMDF.cat
-DriverVer = 07/24/2023,14.42.15.731
+DriverVer = 07/24/2023,14.48.4.784
 PnpLockdown=1
 
 [DestinationDirs]
@@ -68,7 +68,7 @@ ServiceBinary  = %12%\MouseDriverKMDF.sys
 [MouseDriverKMDF_Device.NT.HW]
 Include = MSMOUSE.INF
 Needs = HID_Mouse_Inst.NT.Hw
-HKR,,"UpperFilters",0x00010000,"MouseDriverKMDF"
+HKR,,"UpperFilters",0x00010000,"MouseDriverKMDF_Device"
 ;HKR,,"LowerFilters",0x00010000,"MouseDriverKMDF"
 
 ;[MouseDriverKMDF_Device.NT.CoInstallers]
