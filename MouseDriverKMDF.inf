@@ -8,7 +8,7 @@ Class=Mouse ; TODO: specify appropriate Class
 ClassGuid={4D36E96F-E325-11CE-BFC1-08002BE10318} ; TODO: specify appropriate ClassGuid
 Provider=%ManufacturerName%
 CatalogFile=MouseDriverKMDF.cat
-DriverVer = 07/24/2023,16.7.25.704
+DriverVer = 07/24/2023,16.13.56.829
 PnpLockdown=1
 
 [DestinationDirs]
@@ -49,7 +49,8 @@ MouseDriverKMDF.sys
 
 ;-------------- Service installation
 [MouseDriverKMDF_Device.NT.Services]
-AddService = MouseDriverKMDF,%SPSVCINST_ASSOCSERVICE%, MouseDriverKMDF_Service_Inst
+;AddService = MouseDriverKMDF,%SPSVCINST_ASSOCSERVICE%, MouseDriverKMDF_Service_Inst
+AddService = MouseDriverKMDF,  , MouseDriverKMDF_Service_Inst
 Include = MSMOUSE.INF
 Needs = HID_Mouse_Inst.NT.Services
 
@@ -74,17 +75,19 @@ AddReg = MouseDriverKMDF_Device.HW.AddReg
 HKR,,"UpperFilters",0x00010000,"MouseDriverKMDF"
 ;HKR,,"LowerFilters",0x00010000,"MouseDriverKMDF"
 
-;[MouseDriverKMDF_Device.NT.CoInstallers]
+[MouseDriverKMDF_Device.NT.CoInstallers]
 ;Include = MSMOUSE.INF
 ;Needs = HID_Mouse_Inst.NT.Hw
-;AddReg=MouseDriverKMDF_Device_CoInstaller_AddReg
-;CopyFiles=MouseDriverKMDF_Device_CoInstaller_CopyFiles
+AddReg=MouseDriverKMDF_Device_CoInstaller_AddReg
+CopyFiles=MouseDriverKMDF_Device_CoInstaller_CopyFiles
 
-;[MouseDriverKMDF_Device_CoInstaller_AddReg]
-;HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+[MouseDriverKMDF_Device_CoInstaller_AddReg]
+;
 
-;[MouseDriverKMDF_Device_CoInstaller_CopyFiles]
-;WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[MouseDriverKMDF_Device_CoInstaller_CopyFiles]
+;
+
 
 [MouseDriverKMDF_Device.NT.Wdf]
 KmdfService =  MouseDriverKMDF, MouseDriverKMDF_wdfsect
