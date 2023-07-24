@@ -8,11 +8,11 @@ Class=Mouse ; TODO: specify appropriate Class
 ClassGuid={4D36E96F-E325-11CE-BFC1-08002BE10318} ; TODO: specify appropriate ClassGuid
 Provider=%ManufacturerName%
 CatalogFile=MouseDriverKMDF.cat
-DriverVer = 07/24/2023,15.4.30.199
+DriverVer = 07/24/2023,15.15.28.388
 PnpLockdown=1
 
 [DestinationDirs]
-DefaultDestDir = 12
+DefaultDestDir = 13
 ;MouseDriverKMDF_Device_CoInstaller_CopyFiles = 11
 
 [SourceDisksNames]
@@ -58,8 +58,8 @@ AddService = MouseDriverKMDF,%SPSVCINST_ASSOCSERVICE%, MouseDriverKMDF_Service_I
 DisplayName    = %MouseDriverKMDF.SVCDESC%
 ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
 StartType      = 3               ; SERVICE_DEMAND_START
-ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
-ServiceBinary  = %12%\MouseDriverKMDF.sys
+ErrorControl   = 0               ; SERVICE_ERROR_IGNORE	;1 SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\MouseDriverKMDF.sys
 
 ;
 ;--- MouseDriverKMDF_Device Coinstaller installation ------
