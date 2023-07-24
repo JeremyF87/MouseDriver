@@ -8,20 +8,19 @@ Class=Mouse ; TODO: specify appropriate Class
 ClassGuid={4D36E96F-E325-11CE-BFC1-08002BE10318} ; TODO: specify appropriate ClassGuid
 Provider=%ManufacturerName%
 CatalogFile=MouseDriverKMDF.cat
-DriverVer = 07/24/2023,13.39.33.324
+DriverVer = 07/24/2023,14.42.15.731
 PnpLockdown=1
 
 [DestinationDirs]
 DefaultDestDir = 12
-MouseDriverKMDF_Device_CoInstaller_CopyFiles = 11
+;MouseDriverKMDF_Device_CoInstaller_CopyFiles = 11
 
 [SourceDisksNames]
 1 = %DiskName%,,,""
 
 [SourceDisksFiles]
 MouseDriverKMDF.sys  = 1,,
-;
-
+;WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
 
 ;*****************************************
 ; Install Section
@@ -31,7 +30,14 @@ MouseDriverKMDF.sys  = 1,,
 %ManufacturerName%=Standard,NTamd64
 
 [Standard.NTamd64]
-%MouseDriverKMDF.DeviceDesc%=MouseDriverKMDF_Device, HID_DEVICE_SYSTEM_MOUSE ; TODO: edit hw-id
+%MouseDriverKMDF.DeviceDesc%=MouseDriverKMDF_Device, HID_DEVICE_SYSTEM_MOUSE ;HID\VID_046D&PID_C52F&REV_3000&MI_00 ; TODO: edit hw-id
+
+;HID\VID_046D&PID_C52F&REV_3000&MI_00
+;HID\VID_046D&PID_C52F&MI_00
+;HID\VID_046D&UP:0001_U:0002
+;HID_DEVICE_SYSTEM_MOUSE
+;HID_DEVICE_UP:0001_U:0002
+;HID_DEVICE
 
 [MouseDriverKMDF_Device.NT]
 Include = MSMOUSE.INF
